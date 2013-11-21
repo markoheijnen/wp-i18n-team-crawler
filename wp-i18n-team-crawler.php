@@ -15,6 +15,25 @@ include 'crawler.php';
 
 class WP_I18n_Teams {
 
+	public function __construct() {
+		add_shortcode( 'wp-i18n-team', array( $this, 'all_information' ) );
+	}
+
+	public function all_information( $args ) {
+		$html  = '';
+		$sites = WP_I18n_Team_Crawler::get_sites();
+
+		foreach ( $sites as $site ) {
+			$html .= '<li>';
+			$html .= '<h2>' . $site->english_name . ' &ndash; ' . $site->native_name . ' ( ' . $site->wp_locale . ' )</h2>';
+			$html .= '<a href="http://' . $site->slug .'.wordpress.org">View site</a>';
+			$html .= '</li>';
+		}
+
+		$html = '<ul class="translators-info">' . $html . '</ul>';
+
+		return $html;
+	}
 }
 
 new WP_I18n_Teams();
