@@ -12,6 +12,39 @@ class WP_I18n_Team_Crawler {
 		return $locales;
 	}
 
+	public static function get_validators( $locale ) {
+		$url = 'http://api.wordpress.org/core/credits/1.1/?version=' . self::current_wordpress_version() . '&locale=' . $locale;
+
+		if ( false === ( $validators = get_transient( 'wp-i18n-validators-' . $locale ) ) ) {
+			$response = wp_remote_get( $url );
+			$body     = wp_remote_retrieve_body( $response );
+
+			if( $body ) {
+				$data = json_decode( $body );
+
+				if( isset( $data->groups->validators ) ) {
+					$validators = $data->groups->validators->data;
+				}
+				else {
+					$validators = array( array( 'No validators' ) );
+				}
+
+				set_transient( 'wp-i18n-validators-' . $locale, $validators );
+			}
+		}
+
+		return $validators;
+	}
+
+
+	/* HELPER FUNCTIONS*/
+
+	private static function current_wordpress_version() {
+		global $wp_version;
+
+		return $wp_version;
+	}
+
 	public static function filter_locale_for_wp( $element ) {
 		if ( ! isset( $element->wp_locale ) ) {
 			return false;
