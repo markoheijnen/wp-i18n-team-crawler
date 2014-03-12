@@ -23,17 +23,35 @@ class WP_I18n_Team_Crawler {
 				$data = json_decode( $body );
 
 				if( isset( $data->groups->validators ) ) {
-					$validators = $data->groups->validators->data;
+					$validators  = $data->groups->validators->data;
 				}
 				else {
-					$validators = array( array( 'No validators' ) );
+					$validators  = array();
 				}
 
-				set_transient( 'wp-i18n-validators-' . $locale, $validators );
+				if( isset( $data->groups->translators ) ) {
+					$translators = $data->groups->translators->data;
+				}
+				else {
+					$translators = array();
+				}
+
+				set_transient( 'wp-i18n-validators-' . $locale, $validators, DAY_IN_SECONDS * 2 );
+				set_transient( 'wp-i18n-translators-' . $locale, $translators, DAY_IN_SECONDS * 2 );
 			}
 		}
 
 		return $validators;
+	}
+
+	public static function get_translators( $locale ) {
+		if ( false === ( $translators = get_transient( 'wp-i18n-translators-' . $locale ) ) ) {
+			self::get_validators( $locale );
+
+			$translators = get_transient( 'wp-i18n-translators-' . $locale );
+		}
+
+		return $translators;
 	}
 
 
