@@ -33,10 +33,16 @@ class WP_I18n_Teams {
 
 			$html .= '<h3>' . __( 'Validators', 'wp-i18n-team-crawler' ) . '</h3>';
 			$html .= '<ul>';
-			foreach( $validators as $validator ) {
-				$html .= '<li>';
-				$html .= $validator[0];
-				$html .= '</li>';
+
+			if ( $validators ) {
+				foreach( $validators as $validator ) {
+					$html .= '<li>';
+					$html .= $validator[0];
+					$html .= '</li>';
+				}
+			}
+			else {
+				$html .= '<li>' . __( 'No validators yet', 'wp-i18n-team-crawler' ) . '</li>';
 			}
 
 			$html .= '</ul>';
@@ -44,6 +50,7 @@ class WP_I18n_Teams {
 			if( $translators ) {
 				$html .= '<h3>' . __( 'Translators', 'wp-i18n-team-crawler' ) . '</h3>';
 				$html .= '<ul>';
+
 				foreach( $translators as $translator ) {
 					$html .= '<li>';
 					$html .= $translator;
