@@ -3,7 +3,7 @@
 class WP_I18n_Team_Crawler {
 
 	public static function get_sites() {
-		include 'lib/locales.php';
+		include 'locales/locales.php';
 
 		$locales = GP_Locales::locales();
 		$locales = array_filter( $locales, array( __CLASS__, 'filter_locale_for_wp' ) );
