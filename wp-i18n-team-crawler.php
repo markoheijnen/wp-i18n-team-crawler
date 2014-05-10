@@ -23,11 +23,12 @@ class WP_I18n_Teams {
 		$html  = '';
 		$sites = WP_I18n_Team_Crawler::get_sites();
 
+		$i = 0;
 		foreach ( $sites as $site ) {
 			$validators  = WP_I18n_Team_Crawler::get_validators( $site->wp_locale );
 			$translators = WP_I18n_Team_Crawler::get_translators( $site->wp_locale );
 
-			$html .= '<li>';
+			$html .= '<div class="col-sm-6">';
 			$html .= '<h2>' . $site->english_name . ' &ndash; ' . $site->native_name . ' ( ' . $site->wp_locale . ' )</h2>';
 			$html .= '<a href="http://' . $site->slug .'.wordpress.org">View site</a>';
 
@@ -59,9 +60,17 @@ class WP_I18n_Teams {
 
 				$html .= '</ul>';
 			}
+
+			$html .= '</div>';
+
+			$i++;
+
+			if ( $i % 2 == 0 ) {
+				$html .= '</div><div class="translators-info row">';
+			}
 		}
 
-		$html = '<ul class="translators-info">' . $html . '</ul>';
+		$html = '<div class="translators-info row">' . $html . '</div>';
 
 		return $html;
 	}
