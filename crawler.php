@@ -16,7 +16,6 @@ class WP_I18n_Team_Crawler {
 		$locale = GP_Locales::by_slug( $slug );
 		$url    = 'http://api.wordpress.org/core/credits/1.1/?version=' . self::current_wordpress_version() . '&locale=' . $locale->wp_locale;
 
-		//
 		if ( false === ( $locale_data = get_transient( 'locale-' . $slug ) ) ) {
 			$response = wp_remote_get( $url );
 			$body     = wp_remote_retrieve_body( $response );
@@ -43,7 +42,7 @@ class WP_I18n_Team_Crawler {
 				$locale_data['url']     = 'http://' . $slug . '.wordpress.org';
 				$locale_data['version'] = '';
 
-				$request = wp_remote_get( $locale_data['url'] );
+				$request = wp_remote_get( $locale_data['url'], array( 'redirection' => 0 ) );
 				$code    = wp_remote_retrieve_response_code( $request );
 
 				if ( 200 === $code ) {
