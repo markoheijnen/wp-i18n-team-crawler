@@ -47,7 +47,7 @@ class WP_I18n_Teams {
 					$html .= '<td>' . $locale['version'] . '</td>';
 				}
 				else {
-					$html .= '<td>' . __( 'None', 'wp-i18n-team-crawler' ) . '<</td>';
+					$html .= '<td>' . __( 'None', 'wp-i18n-team-crawler' ) . '</td>';
 				}
 			}
 			else {
