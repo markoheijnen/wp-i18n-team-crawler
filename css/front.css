@@ -1,0 +1,20 @@
+.translators-info table {
+	border: 1px solid #ccc;
+	border-width: 1px 1px 1px 0;
+	border-spacing: 0;
+	margin: .7em 0 1.5em;
+	width: 100%;
+}
+
+.translators-info th {
+	background: #ccc;
+	border: 1px solid #ccc;
+	border-width: 1px 0 0 1px;
+	padding: 6px 15px;
+}
+
+.translators-info td {
+	border: 1px solid #ccc;
+	border-width: 1px 0 0 1px;
+	padding: 6px 15px;
+}

@@ -3,7 +3,7 @@
 Plugin Name: WP I18N Teams
 Plugin URI:  
 Description: Scans through a few APIs to generate a list of all languages/members
-Version:     0.1
+Version:     0.5
 License:     GPLv2 or later
 Author:      Marko Heijnen
 Author URI:  http://www.markoheijnen.com
@@ -20,57 +20,50 @@ class WP_I18n_Teams {
 	}
 
 	public function all_information( $args ) {
-		$html  = '';
 		$sites = WP_I18n_Team_Crawler::get_sites();
 
-		$i = 0;
+		$html  = '<table>';
+		$html .= '<thead>';
+		$html .= '<tr>';
+		$html .= '<th>' . __( 'Locale Name', 'wp-i18n-team-crawler' ) . '</th>';
+		$html .= '<th>' . __( 'Native Name', 'wp-i18n-team-crawler' ) . '</th>';
+		$html .= '<th>' . __( 'Locale Code', 'wp-i18n-team-crawler' ) . '</th>';
+		$html .= '<th>' . __( 'Version', 'wp-i18n-team-crawler' ) . '</th>';
+		$html .= '</tr>';
+		$html .= '</thead>';
+		$html .= '<tbody>';
+
 		foreach ( $sites as $site ) {
-			$validators  = WP_I18n_Team_Crawler::get_validators( $site->wp_locale );
-			$translators = WP_I18n_Team_Crawler::get_translators( $site->wp_locale );
+			$locale  = WP_I18n_Team_Crawler::get_locale( $site->slug );
 
-			$html .= '<div class="col-sm-6">';
-			$html .= '<h2>' . $site->english_name . ' &ndash; ' . $site->native_name . ' ( ' . $site->wp_locale . ' )</h2>';
-			$html .= '<a href="http://' . $site->slug .'.wordpress.org">View site</a>';
+			$html .= '<tr>';
+			$html .= '<td>' . $site->english_name . '</td>';
+			$html .= '<td>' . $site->native_name . '</td>';
 
-			$html .= '<h3>' . __( 'Validators', 'wp-i18n-team-crawler' ) . '</h3>';
-			$html .= '<ul>';
+			if ( $locale['url'] ) {
+				$html .= '<td><a href="' . $locale['url'] . '">' . $site->slug . '</a></td>';
 
-			if ( $validators ) {
-				foreach( $validators as $validator ) {
-					$html .= '<li>';
-					$html .= $validator[0];
-					$html .= '</li>';
+				if ( $locale['version'] ) {
+					$html .= '<td>' . $locale['version'] . '</td>';
+				}
+				else {
+					$html .= '<td>' . __( 'None', 'wp-i18n-team-crawler' ) . '<</td>';
 				}
 			}
 			else {
-				$html .= '<li>' . __( 'No validators yet', 'wp-i18n-team-crawler' ) . '</li>';
+				$html .= '<td>' . $site->slug . '</td>';
+				$html .= '<td>' . __( 'No site', 'wp-i18n-team-crawler' ) . '</td>';
 			}
 
-			$html .= '</ul>';
-
-			if( $translators ) {
-				$html .= '<h3>' . __( 'Translators', 'wp-i18n-team-crawler' ) . '</h3>';
-				$html .= '<ul>';
-
-				foreach( $translators as $translator ) {
-					$html .= '<li>';
-					$html .= $translator;
-					$html .= '</li>';
-				}
-
-				$html .= '</ul>';
-			}
-
-			$html .= '</div>';
-
-			$i++;
-
-			if ( $i % 2 == 0 ) {
-				$html .= '</div><div class="translators-info row">';
-			}
+			$html .= '</tr>';
 		}
 
-		$html = '<div class="translators-info row">' . $html . '</div>';
+		$html .= '</tbody>';
+		$html .= '</table>';
+
+		$html = '<div class="translators-info">' . $html . '</div>';
+
+		wp_enqueue_style( 'wp-i18n-team', plugins_url( 'css/front.css', __FILE__ ), array(), '0.5' );
 
 		return $html;
 	}
