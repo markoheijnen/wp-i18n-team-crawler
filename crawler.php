@@ -38,8 +38,14 @@ class WP_I18n_Team_Crawler {
 					$locale_data['translators'] = array();
 				}
 
+				switch ( $slug ) {
+					case 'pt-br':
+						$locale_data['url'] = 'http://br.wordpress.org';
+					break;
+					default:
+						$locale_data['url'] = 'http://' . $slug . '.wordpress.org';
+				}
 
-				$locale_data['url']     = 'http://' . $slug . '.wordpress.org';
 				$locale_data['version'] = '';
 
 				$request = wp_remote_get( $locale_data['url'], array( 'redirection' => 0 ) );
