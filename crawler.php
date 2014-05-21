@@ -60,7 +60,7 @@ class WP_I18n_Team_Crawler {
 						$parts = explode(' ', htmlspecialchars_decode( $nodes->item(0)->nodeValue ) );
 
 						foreach ( $parts as $part ) {
-							if ( preg_match( '/^\d+(\.\d+)*$/', $part ) ) {
+							if ( preg_match( '/^\d+(\.\d+)*$/', $part ) || strpos( $part, 'alpha' ) !== false || strpos( $part, 'beta' ) !== false ) {
 								$locale_data['version'] = $part;
 								break;
 							}
