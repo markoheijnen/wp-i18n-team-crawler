@@ -12,7 +12,7 @@ class WP_I18n_Team_Crawler {
 		return $locales;
 	}
 
-	public function get_locale( $slug ) {
+	public static function get_locale( $slug ) {
 		$locale = GP_Locales::by_slug( $slug );
 		$url    = 'http://api.wordpress.org/core/credits/1.1/?version=' . self::current_wordpress_version() . '&locale=' . $locale->wp_locale;
 
