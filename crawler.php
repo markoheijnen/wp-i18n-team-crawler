@@ -130,7 +130,7 @@ class WP_I18n_Team_Crawler {
 
 	/* HELPER FUNCTIONS*/
 
-	private static function current_wordpress_version() {
+	public static function current_wordpress_version() {
 		global $wp_version;
 
 		return $wp_version;

@@ -18,3 +18,17 @@
 	border-width: 1px 0 0 1px;
 	padding: 6px 15px;
 }
+
+
+.version.latest {
+	background: #d2e7ca;
+}
+.version.minor-behind {
+	background: #fef0c1;
+}
+.version.major-behind-one {
+	background: #E3AE85;
+}
+.version.major-behind-many {
+	background: #e38587;
+}
