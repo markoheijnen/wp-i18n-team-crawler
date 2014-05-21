@@ -28,6 +28,7 @@ class WP_I18n_Teams {
 		$html .= '<tr>';
 		$html .= '<th>' . __( 'Locale Name', 'wp-i18n-team-crawler' ) . '</th>';
 		$html .= '<th>' . __( 'Native Name', 'wp-i18n-team-crawler' ) . '</th>';
+		$html .= '<th>' . __( 'WordPress Locale Code', 'wp-i18n-team-crawler' ) . '</th>';
 		$html .= '<th>' . __( 'Locale Code', 'wp-i18n-team-crawler' ) . '</th>';
 		$html .= '<th>' . __( 'Version', 'wp-i18n-team-crawler' ) . '</th>';
 		$html .= '</tr>';
@@ -41,6 +42,7 @@ class WP_I18n_Teams {
 			$html .= '<tr class="' . $class . '">';
 			$html .= '<td>' . $site->english_name . '</td>';
 			$html .= '<td>' . $site->native_name . '</td>';
+			$html .= '<td>' . $site->wp_locale . '</td>';
 
 			if ( $locale['url'] ) {
 				$html .= '<td><a href="' . $locale['url'] . '">' . $site->slug . '</a></td>';
