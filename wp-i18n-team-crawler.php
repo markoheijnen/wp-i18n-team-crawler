@@ -60,8 +60,6 @@ class WP_I18n_Teams {
 			$html .= '<td>' . $locale_code . '</td>';
 			$html .= '<td>' . $site->wp_locale . '</td>';
 			$html .= '<td>' . $version . '</td>';
-
-
 			$html .= '</tr>';
 		}
 
