@@ -3,7 +3,7 @@
 Plugin Name: WP I18N Teams
 Plugin URI:  
 Description: Scans through a few APIs to generate a list of all languages/members
-Version:     0.5
+Version:     0.7
 License:     GPLv2 or later
 Author:      Marko Heijnen
 Author URI:  http://www.markoheijnen.com
@@ -14,6 +14,7 @@ Domain Path: /languages
 include 'crawler.php';
 
 class WP_I18n_Teams {
+	static $version = '0.7';
 
 	public function __construct() {
 		add_shortcode( 'wp-i18n-team', array( $this, 'all_information' ) );
@@ -113,7 +114,7 @@ class WP_I18n_Teams {
 
 		$html = '<div class="translators-info">' . $html . $table . '</div>';
 
-		wp_enqueue_style( 'wp-i18n-team', plugins_url( 'css/front.css', __FILE__ ), array(), '0.6' );
+		wp_enqueue_style( 'wp-i18n-team', plugins_url( 'css/front.css', __FILE__ ), array(), self::$version );
 
 		return $html;
 	}
