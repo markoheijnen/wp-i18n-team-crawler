@@ -91,46 +91,24 @@ class WP_I18n_Team_Crawler {
 	}
 
 
-	public static function get_validators( $locale ) {
-		$url = 'http://api.wordpress.org/core/credits/1.1/?version=' . self::current_wordpress_version() . '&locale=' . $locale;
+	public static function get_validators( $slug ) {
+		$locale = self::get_locale( $slug );
 
-		if ( false === ( $validators = get_transient( 'wp-i18n-validators-' . $locale ) ) ) {
-			$response = wp_remote_get( $url );
-			$body     = wp_remote_retrieve_body( $response );
-
-			if( $body ) {
-				$data = json_decode( $body );
-
-				if( isset( $data->groups->validators ) ) {
-					$validators  = $data->groups->validators->data;
-				}
-				else {
-					$validators  = array();
-				}
-
-				if( isset( $data->groups->translators ) ) {
-					$translators = $data->groups->translators->data;
-				}
-				else {
-					$translators = array();
-				}
-
-				set_transient( 'wp-i18n-validators-' . $locale, $validators, DAY_IN_SECONDS * 2 );
-				set_transient( 'wp-i18n-translators-' . $locale, $translators, DAY_IN_SECONDS * 2 );
-			}
+		if ( $locale && isset( $locale['validators'] ) ) {
+			return $locale['validators'];
 		}
 
-		return $validators;
+		return array();
 	}
 
 	public static function get_translators( $locale ) {
-		if ( false === ( $translators = get_transient( 'wp-i18n-translators-' . $locale ) ) ) {
-			self::get_validators( $locale );
+		$locale = self::get_locale( $slug );
 
-			$translators = get_transient( 'wp-i18n-translators-' . $locale );
+		if ( $locale && isset( $locale['translators'] ) ) {
+			return $locale['translators'];
 		}
 
-		return $translators;
+		return array();
 	}
 
 
