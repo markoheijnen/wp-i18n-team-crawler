@@ -39,8 +39,20 @@ class WP_I18n_Team_Crawler {
 				}
 
 				switch ( $slug ) {
+					case 'es-cl':
+						$locale_data['url'] = 'http://cl.wordpress.org';
+					break;
+					case 'es-pe':
+						$locale_data['url'] = 'http://pe.wordpress.org';
+					break;
+					case 'es-ve':
+						$locale_data['url'] = 'http://ve.wordpress.org';
+					break;
 					case 'pt-br':
 						$locale_data['url'] = 'http://br.wordpress.org';
+					break;
+					case 'sa-in':
+						$locale_data['url'] = 'http://sa.wordpress.org';
 					break;
 					case 'zh-cn':
 						$locale_data['url'] = 'http://cn.wordpress.org';
