@@ -42,6 +42,12 @@ class WP_I18n_Team_Crawler {
 					case 'pt-br':
 						$locale_data['url'] = 'http://br.wordpress.org';
 					break;
+					case 'zh-cn':
+						$locale_data['url'] = 'http://cn.wordpress.org';
+					break;
+					case 'zh-tw':
+						$locale_data['url'] = 'http://tw.wordpress.org';
+					break;
 					default:
 						$locale_data['url'] = 'http://' . $slug . '.wordpress.org';
 				}
