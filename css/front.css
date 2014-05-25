@@ -20,16 +20,16 @@
 }
 
 
-.label.latest {
+.i18n-label.latest {
 	color: #468847;
 }
-.label.minor-behind {
+.i18n-label.minor-behind {
 	color: #F7D708;
 }
-.label.major-behind-one {
+.i18n-label.major-behind-one {
 	color: #E6A45A;
 }
-.label.major-behind-many {
+.i18n-label.major-behind-many {
 	color: #e38587;
 }
 

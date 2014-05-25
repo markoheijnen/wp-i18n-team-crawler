@@ -103,11 +103,11 @@ class WP_I18n_Teams {
 		$html  = '<p>';
 		$html .= sprintf(
 			__( '%s locales up-to-date. %s locales behind by one minor version. %s locales behind by one major version. %s locales behind by two or more major versions. %s locales do not yet have a package available.', 'wp-i18n-team-crawler' ),
-			'<strong class="label latest">' . $latest . '</strong>',
-			'<strong class="label minor-behind">' . $minor_behind . '</strong>',
-			'<strong class="label major-behind-one">' . $major_behind_one . '</strong>',
-			'<strong class="label major-behind-many">' . $major_behind_many . '</strong>',
-			'<strong class="label">' . ( $no_sites + $no_downloads ) . '</strong>'
+			'<strong class="i18n-label latest">' . $latest . '</strong>',
+			'<strong class="i18n-label minor-behind">' . $minor_behind . '</strong>',
+			'<strong class="i18n-label major-behind-one">' . $major_behind_one . '</strong>',
+			'<strong class="i18n-label major-behind-many">' . $major_behind_many . '</strong>',
+			'<strong class="i18n-label">' . ( $no_sites + $no_downloads ) . '</strong>'
 		);
 		$html .= '</p>';
 
