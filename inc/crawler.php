@@ -48,7 +48,7 @@ class WP_I18n_Team_Crawler {
 		return $locale_data;
 	}
 
-	private static function get_locale_url( $slug ) {
+	public static function get_locale_url( $slug ) {
 		switch ( $slug ) {
 			case 'es-cl':
 				$url = 'http://cl.wordpress.org';

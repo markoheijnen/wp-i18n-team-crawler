@@ -14,13 +14,17 @@ class WP_I18n_Team_Api {
 	}
 
 	public static function get_locale( $slug ) {
-		if ( self::$counter <= 20 ) {
-			echo self::$counter . '-';
-			self::$counter++;
-		}
-
 		if ( false === ( $locale_data = get_transient( 'locale-' . $slug ) ) ) {
-			$locale_data = WP_I18n_Team_Crawler::get_locale( $slug );
+			// Only rune the first 20 calls.
+			if ( self::$counter <= 20 ) {
+				$locale_data = WP_I18n_Team_Crawler::get_locale( $slug );
+			}
+			else {
+				$locale_data = array(
+					'version' => '',
+					'url'     => WP_I18n_Team_Crawler::get_locale_url( $slug ),
+				);
+			}
 		}
 
 		return $locale_data;
