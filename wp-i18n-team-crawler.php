@@ -11,7 +11,8 @@ Text Domain: wp-i18n-team-crawler
 Domain Path: /languages
 */
 
-include 'crawler.php';
+include 'inc/api.php';
+include 'inc/crawler.php';
 
 class WP_I18n_Teams {
 	static $version = '0.7';
@@ -23,7 +24,7 @@ class WP_I18n_Teams {
 	public function all_information( $args ) {
 		$no_sites = $no_downloads = $latest = $minor_behind = $major_behind_one = $major_behind_many = 0;
 
-		$sites = WP_I18n_Team_Crawler::get_sites();
+		$sites = WP_I18n_Team_Api::get_sites();
 
 		$table  = '<table>';
 		$table .= '<thead>';
@@ -38,13 +39,13 @@ class WP_I18n_Teams {
 		$table .= '<tbody>';
 
 		foreach ( $sites as $site ) {
-			$locale = WP_I18n_Team_Crawler::get_locale( $site->slug );
+			$locale = WP_I18n_Team_Api::get_locale( $site->slug );
 			$class  = '';
 
 		 	if ( $locale['version'] ) {
 		 		$class = 'version';
 
-				$wp_version = WP_I18n_Team_Crawler::current_wordpress_version();
+				$wp_version = WP_I18n_Team_Api::current_wordpress_version();
 				$one_lower  = $wp_version - 0.1;
 
 				if ( $locale['version'] == $wp_version ) {
