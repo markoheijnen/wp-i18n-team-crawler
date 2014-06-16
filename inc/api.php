@@ -14,20 +14,46 @@ class WP_I18n_Team_Api {
 	}
 
 	public static function get_locale( $slug ) {
-		if ( false === ( $locale_data = get_transient( 'locale-' . $slug ) ) ) {
+		$locale_object = get_page_by_path( $slug, OBJECT, 'locale' );
+
+		if ( ! $locale_object ) {
+
+			$locale = GP_Locales::by_slug( $slug );
+
+			$args = array(
+				'post_type'   => 'locale',
+				'post_name'   => $slug,
+				'post_title'  => $locale->english_name,
+				'post_status' => 'publish',
+			);
+			$post_id = wp_insert_post( $args );
+
+			self::update_locale_info( $post_id, $slug );
+
+			$locale_object = get_post( $post_id );
+		}
+		else {
+			$date    = mysql2date( 'U', $locale_object->post_modified - DAY_IN_SECONDS );
+			$current = current_time( 'timestamp' );
+
 			// Only rune the first 20 calls.
-			if ( self::$counter <= 20 ) {
+			if ( self::$counter <= 20 && $date > $current ) {
 				$locale_data = WP_I18n_Team_Crawler::get_locale( $slug );
-			}
-			else {
-				$locale_data = array(
-					'version' => '',
-					'url'     => WP_I18n_Team_Crawler::get_locale_url( $slug ),
-				);
 			}
 		}
 
-		return $locale_data;
+		return $locale_object;
+	}
+
+	private static function update_locale_info( $post_id, $slug ) {
+		$data = WP_I18n_Team_Crawler::get_locale( $slug );
+
+		update_post_meta( $post_id, 'url', $data['url'] );
+		update_post_meta( $post_id, 'version', $data['version'] );
+
+
+		update_post_meta( $post_id, '_validators', $data['validators'] );
+		update_post_meta( $post_id, '_translators', $data['translators'] );
 	}
 
 

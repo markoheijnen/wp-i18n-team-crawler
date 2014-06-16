@@ -3,7 +3,7 @@
 Plugin Name: WP I18N Teams
 Plugin URI:  
 Description: Scans through a few APIs to generate a list of all languages/members
-Version:     0.7
+Version:     0.8
 License:     GPLv2 or later
 Author:      Marko Heijnen
 Author URI:  http://www.markoheijnen.com
@@ -13,12 +13,15 @@ Domain Path: /languages
 
 include 'inc/api.php';
 include 'inc/crawler.php';
+include 'inc/locale.php';
 
 class WP_I18n_Teams {
-	static $version = '0.7';
+	static $version = '0.8';
 
 	public function __construct() {
 		add_shortcode( 'wp-i18n-team', array( $this, 'all_information' ) );
+
+		new WP_I18n_Team_Locale;
 	}
 
 	public function all_information( $args ) {
@@ -42,23 +45,23 @@ class WP_I18n_Teams {
 			$locale = WP_I18n_Team_Api::get_locale( $site->slug );
 			$class  = '';
 
-		 	if ( $locale['version'] ) {
+		 	if ( $locale->version ) {
 		 		$class = 'version';
 
 				$wp_version = WP_I18n_Team_Api::current_wordpress_version();
 				$one_lower  = $wp_version - 0.1;
 
-				if ( $locale['version'] == $wp_version ) {
+				if ( $locale->version == $wp_version ) {
 					$class .= ' latest';
 
 					$latest++;
 				}
-				else if ( substr( $locale['version'], 0, 3 ) == substr( $wp_version, 0, 3 ) ) {
+				else if ( substr( $locale->version, 0, 3 ) == substr( $wp_version, 0, 3 ) ) {
 					$class .= ' minor-behind';
 
 					$minor_behind++;
 				}
-				else if ( substr( $locale['version'], 0, 3 ) == substr( $one_lower, 0, 3 ) ) {
+				else if ( substr( $locale->version, 0, 3 ) == substr( $one_lower, 0, 3 ) ) {
 					$class .= ' major-behind-one';
 
 					$major_behind_one++;
@@ -70,11 +73,11 @@ class WP_I18n_Teams {
 				}
 			}
 
-			if ( $locale['url'] ) {
-				$locale_code = '<a href="' . $locale['url'] . '">' . $site->slug . '</a>';
+			if ( $locale->url ) {
+				$locale_code = '<a href="' . $locale->url . '">' . $site->slug . '</a>';
 
-				if ( $locale['version'] ) {
-					$version = $locale['version'];
+				if ( $locale->version ) {
+					$version = $locale->version;
 				}
 				else {
 					$version = __( 'None', 'wp-i18n-team-crawler' );
