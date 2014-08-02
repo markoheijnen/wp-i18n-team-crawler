@@ -5,6 +5,8 @@ class WP_I18n_Team_Locale {
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_post_type' ) );
 		add_filter( 'post_updated_messages', array( $this, 'post_updated_messages' ) );
+
+		add_filter( 'the_content', array( $this, 'the_content' ) );
 	}
 
 
@@ -95,6 +97,44 @@ class WP_I18n_Team_Locale {
 		}
 
 		return $messages;
+	}
+
+
+
+	public function the_content( $content ) {
+		$post = get_post();
+
+		if ( 'locale' == $post->post_type ) {
+			$validators = WP_I18n_Team_Api::get_validators( $post->post_name );
+			$translators = WP_I18n_Team_Api::get_translators( $post->post_name );
+
+			$content .= "<h2>Validators</h2>";
+			if ( $validators ) {
+				$content .= '<ul>';
+				foreach( $validators as $validator ) {
+					$content .= '<li>';
+					$content .= $validator[0];
+					$content .= '</li>';
+				}
+				$content .= '</ul>';
+			}
+			else {
+				$content .= '<p>' . __( 'No validators for the language.', 'wp-i18n-team-crawler' ) . '</p>';
+			}
+
+			if ( $translators ) {
+				$content .= "<h2>Translators</h2>";
+				$content .= '<ul>';
+				foreach( $translators as $translator ) {
+					$content .= '<li>';
+					$content .= $translator;
+					$content .= '</li>';
+				}
+				$content .= '</ul>';
+			}
+		}
+
+		return $content;
 	}
 
 }
