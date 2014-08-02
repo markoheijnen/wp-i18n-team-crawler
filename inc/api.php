@@ -33,12 +33,22 @@ class WP_I18n_Team_Api {
 			$locale_object = get_post( $post_id );
 		}
 		else {
-			$date    = mysql2date( 'U', $locale_object->post_modified - DAY_IN_SECONDS );
+			$date    = mysql2date( 'U', $locale_object->post_modified ) + DAY_IN_SECONDS;
 			$current = current_time( 'timestamp' );
 
-			// Only rune the first 20 calls.
-			if ( self::$counter <= 20 && $date > $current ) {
-				$locale_data = WP_I18n_Team_Crawler::get_locale( $slug );
+			// Only rune the first 15 calls.
+			if ( self::$counter <= 15 && $date < $current ) {
+
+				wp_update_post( 
+					array(
+						'ID' => $locale_object->ID,
+						'post_modified' => current_time( 'mysql' ),
+						'post_modified' => current_time( 'mysql', 1 )
+					)
+				);
+
+				self::update_locale_info( $locale_object->post_id, $slug );
+				self::$counter++;
 			}
 		}
 
