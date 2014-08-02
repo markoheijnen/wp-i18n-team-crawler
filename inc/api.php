@@ -14,11 +14,17 @@ class WP_I18n_Team_Api {
 	}
 
 	public static function get_locale( $slug ) {
+		include_once dirname( __DIR__ ) . '/locales/locales.php';
+
 		$locale_object = get_page_by_path( $slug, OBJECT, 'locale' );
 
 		if ( ! $locale_object ) {
 
 			$locale = GP_Locales::by_slug( $slug );
+
+			if ( ! $locale ) {
+				return false;
+			}
 
 			$args = array(
 				'post_type'   => 'locale',
@@ -70,18 +76,22 @@ class WP_I18n_Team_Api {
 	public static function get_validators( $slug ) {
 		$locale = self::get_locale( $slug );
 
-		if ( $locale && isset( $locale['validators'] ) ) {
-			return $locale['validators'];
+		$validators = get_post_meta( $locale->ID, '_validators', true );
+
+		if ( $validators ) {
+			return $validators;
 		}
 
 		return array();
 	}
 
-	public static function get_translators( $locale ) {
+	public static function get_translators( $slug ) {
 		$locale = self::get_locale( $slug );
 
-		if ( $locale && isset( $locale['translators'] ) ) {
-			return $locale['translators'];
+		$translators = get_post_meta( $locale->ID, '_translators', true );
+
+		if ( $translators ) {
+			return $translators;
 		}
 
 		return array();
