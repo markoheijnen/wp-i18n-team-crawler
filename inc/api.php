@@ -44,6 +44,7 @@ class WP_I18n_Team_Api {
 
 			// Only rune the first 15 calls.
 			if ( self::$counter <= 15 && $date < $current ) {
+				self::update_locale_info( $locale_object->ID, $slug );
 
 				wp_update_post( 
 					array(
@@ -53,7 +54,6 @@ class WP_I18n_Team_Api {
 					)
 				);
 
-				self::update_locale_info( $locale_object->post_id, $slug );
 				self::$counter++;
 			}
 		}
