@@ -40,6 +40,7 @@ class WP_I18n_Team_Api {
 			);
 			$post_id = wp_insert_post( $args );
 
+			update_post_meta( $post_id, 'locale', $locale->wp_locale );
 			self::update_locale_info( $post_id, $slug );
 
 			$locale_object = get_post( $post_id );
