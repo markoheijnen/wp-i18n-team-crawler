@@ -19,10 +19,18 @@ class WP_I18n_Teams {
 	static $version = '0.9';
 
 	public function __construct() {
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_style' ), 1 );
+
 		add_shortcode( 'wp-i18n-team', array( $this, 'all_information' ) );
 
 		new WP_I18n_Team_Locale;
 	}
+
+
+	public function register_style() {
+		wp_register_style( 'wp-i18n-team', plugins_url( 'css/front.css', __FILE__ ), array(), self::$version );
+	}
+
 
 	public function all_information( $args ) {
 		$no_sites = $no_downloads = $latest = $minor_behind = $major_behind_one = $major_behind_many = 0;
@@ -118,7 +126,7 @@ class WP_I18n_Teams {
 
 		$html = '<div class="translators-info">' . $html . $table . '</div>';
 
-		wp_enqueue_style( 'wp-i18n-team', plugins_url( 'css/front.css', __FILE__ ), array(), self::$version );
+		wp_enqueue_style( 'wp-i18n-team' );
 
 		return $html;
 	}
