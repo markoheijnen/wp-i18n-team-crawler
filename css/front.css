@@ -46,3 +46,28 @@
 .version.major-behind-many {
 	background: #e38587;
 }
+
+
+
+.validators {
+	list-style: none;
+	overflow: hidden;
+	padding: 0;
+}
+.validators li {
+	float: left;
+	height: 85px;
+	padding-bottom: 15px;
+	width: 280px;
+}
+.validators .gravatar {
+	float: left;
+	margin: 0 10px 10px 0;
+	padding: 2px;
+}
+.validators a.web {
+	display: block;
+	margin: 6px 0 2px;
+	font-size: 16px;
+	text-decoration: none;
+}

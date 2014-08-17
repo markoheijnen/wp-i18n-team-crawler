@@ -102,20 +102,30 @@ class WP_I18n_Team_Locale {
 
 
 	public function the_content( $content ) {
+		wp_enqueue_style( 'wp-i18n-team' );
+
 		$post = get_post();
 
-		if ( 'locale' == $post->post_type ) {
+		if ( $post && 'locale' == $post->post_type ) {
 			$validators = WP_I18n_Team_Api::get_validators( $post->post_name );
 			$translators = WP_I18n_Team_Api::get_translators( $post->post_name );
 
 			$content .= "<h2>Validators</h2>";
 			if ( $validators ) {
-				$content .= '<ul>';
+				$gravatar = is_ssl() ? 'https://secure.gravatar.com/avatar/' : 'http://0.gravatar.com/avatar/';
+
+				$content .= '<ul class="validators">';
+
 				foreach( $validators as $validator ) {
 					$content .= '<li>';
-					$content .= $validator[0];
+					$content .= '<a href="http://profiles.wordpress.org/' . esc_attr( $validator[2] ) . '">';
+					$content .= '<img src="' . $gravatar . $validator[1] . '?size=60" class="gravatar" alt="' . esc_attr( $validator[0] ) . '" />';
+					$content .= '</a>';
+
+					$content .= '<a class="web" href="http://profiles.wordpress.org/' . esc_attr( $validator[2] ) . '">' . $validator[0] . "</a>";
 					$content .= '</li>';
 				}
+
 				$content .= '</ul>';
 			}
 			else {
@@ -125,11 +135,13 @@ class WP_I18n_Team_Locale {
 			if ( $translators ) {
 				$content .= "<h2>Translators</h2>";
 				$content .= '<ul>';
-				foreach( $translators as $translator ) {
+
+				foreach( $translators as $username => $name ) {
 					$content .= '<li>';
-					$content .= $translator;
+					$content .= '<a href="http://profiles.wordpress.org/' . esc_attr( $username ) . '">' . $name . "</a>";
 					$content .= '</li>';
 				}
+
 				$content .= '</ul>';
 			}
 		}
