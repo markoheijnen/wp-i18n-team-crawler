@@ -16,10 +16,16 @@ class WP_I18n_Team_Api {
 	public static function get_locale( $slug ) {
 		include_once dirname( __DIR__ ) . '/locales/locales.php';
 
-		$locale_object = get_page_by_path( $slug, OBJECT, 'locale' );
+		$post = get_post();
+
+		if ( $post && 'locale' == $post->post_type && $slug == $post->post_nama ) {
+			$locale_object = $post;
+		}
+		else {
+			$locale_object = get_page_by_path( $slug, OBJECT, 'locale' );
+		}
 
 		if ( ! $locale_object ) {
-
 			$locale = GP_Locales::by_slug( $slug );
 
 			if ( ! $locale ) {
