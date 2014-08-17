@@ -45,6 +45,7 @@ class WP_I18n_Teams {
 		$table .= '<th>' . __( 'Locale Code', 'wp-i18n-team-crawler' ) . '</th>';
 		$table .= '<th>' . __( 'WordPress Locale', 'wp-i18n-team-crawler' ) . '</th>';
 		$table .= '<th>' . __( 'Version', 'wp-i18n-team-crawler' ) . '</th>';
+		$table .= '<th></th>';
 		$table .= '</tr>';
 		$table .= '</thead>';
 		$table .= '<tbody>';
@@ -82,8 +83,6 @@ class WP_I18n_Teams {
 			}
 
 			if ( $locale->url ) {
-				$locale_code = '<a href="' . $locale->url . '">' . $site->slug . '</a>';
-
 				if ( $locale->version ) {
 					$version = $locale->version;
 				}
@@ -94,7 +93,6 @@ class WP_I18n_Teams {
 				}
 			}
 			else {
-				$locale_code = $site->slug;
 				$version     = __( 'No site', 'wp-i18n-team-crawler' );
 
 				$no_sites++;
@@ -103,9 +101,10 @@ class WP_I18n_Teams {
 			$table .= '<tr class="' . $class . '">';
 			$table .= '<td>' . $site->english_name . '</td>';
 			$table .= '<td>' . $site->native_name . '</td>';
-			$table .= '<td>' . $locale_code . '</td>';
+			$table .= '<td>' . $site->slug . '</td>';
 			$table .= '<td>' . $site->wp_locale . '</td>';
 			$table .= '<td>' . $version . '</td>';
+			$table .= '<td><a href="' . home_url('locale') . '/' . $locale->post_name . '/">' . __( 'More', 'wp-i18n-team-crawler' ) . '</a></td>';
 			$table .= '</tr>';
 		}
 
