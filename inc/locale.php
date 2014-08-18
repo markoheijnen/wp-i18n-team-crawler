@@ -60,8 +60,7 @@ class WP_I18n_Team_Locale {
 	 */
 	function post_updated_messages( $messages ) {
 		$post             = get_post();
-		$post_type        = get_post_type( $post );
-		$post_type_object = get_post_type_object( $post_type );
+		$post_type_object = get_post_type_object( 'locale' );
 
 		$messages['locale'] = array(
 			0  => '', // Unused. Messages start at index 1.
@@ -86,14 +85,14 @@ class WP_I18n_Team_Locale {
 			$permalink = get_permalink( $post->ID );
 
 			$view_link = sprintf( ' <a href="%s">%s</a>', esc_url( $permalink ), __( 'View locale', 'wp-i18n-team-crawler' ) );
-			$messages[ $post_type ][1] .= $view_link;
-			$messages[ $post_type ][6] .= $view_link;
-			$messages[ $post_type ][9] .= $view_link;
+			$messages['locale' ][1] .= $view_link;
+			$messages['locale' ][6] .= $view_link;
+			$messages['locale' ][9] .= $view_link;
 
 			$preview_permalink = add_query_arg( 'preview', 'true', $permalink );
 			$preview_link = sprintf( ' <a target="_blank" href="%s">%s</a>', esc_url( $preview_permalink ), __( 'Preview locale', 'wp-i18n-team-crawler' ) );
-			$messages[ $post_type ][8]  .= $preview_link;
-			$messages[ $post_type ][10] .= $preview_link;
+			$messages['locale' ][8]  .= $preview_link;
+			$messages['locale' ][10] .= $preview_link;
 		}
 
 		return $messages;
