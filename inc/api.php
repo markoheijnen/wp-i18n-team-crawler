@@ -68,6 +68,45 @@ class WP_I18n_Team_Api {
 		return $locale_object;
 	}
 
+
+	/**
+	 * Retrieve language packs
+	 *
+	 * @param string $wp_version The WordPress version.
+	 *
+	 * @return array|bool A list of all locales with language packs, or false on error.
+	*/
+	public static function get_language_packs() {
+		$wp_version = self::current_wordpress_version();
+
+		// We can't request data before this.
+		if ( version_compare( $wp_version, '4.0', '<' ) ) {
+			return false;
+		}
+
+		$results = get_transient('language_packs');
+		if ( $results ) {
+			return $results;
+		}
+
+		$response = wp_remote_get( 'http://api.wordpress.org/translations/core/1.0/?version=' . $wp_version );
+
+		if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
+			return false;
+		}
+
+		$results = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( ! is_array( $results ) ) {
+			return false;
+		}
+
+		set_transient( 'language_packs', $results, DAY_IN_SECONDS );
+
+		return $results;
+	}
+
+
 	private static function update_locale_info( $post_id, $slug ) {
 		$data = WP_I18n_Team_Crawler::get_locale( $slug );
 
