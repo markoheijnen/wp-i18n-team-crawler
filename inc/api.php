@@ -55,9 +55,9 @@ class WP_I18n_Team_Api {
 
 				wp_update_post( 
 					array(
-						'ID' => $locale_object->ID,
-						'post_modified' => current_time( 'mysql' ),
-						'post_modified' => current_time( 'mysql', 1 )
+						'ID'                => $locale_object->ID,
+						'post_modified'     => current_time( 'mysql' ),
+						'post_modified_gmt' => current_time( 'mysql', 1 )
 					)
 				);
 
