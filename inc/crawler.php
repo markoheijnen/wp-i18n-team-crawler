@@ -41,8 +41,6 @@ class WP_I18n_Team_Crawler {
 			else {
 				$locale_data['url'] = '';
 			}
-
-			set_transient( 'locale-' . $slug, $locale_data, DAY_IN_SECONDS * 2 );
 		}
 
 		return $locale_data;
