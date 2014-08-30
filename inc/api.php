@@ -78,8 +78,6 @@ class WP_I18n_Team_Api {
 	/**
 	 * Retrieve language packs
 	 *
-	 * @param string $wp_version The WordPress version.
-	 *
 	 * @return array|bool A list of all locales with language packs, or false on error.
 	*/
 	public static function get_language_packs() {
