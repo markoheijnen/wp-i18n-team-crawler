@@ -89,25 +89,24 @@ class WP_I18n_Team_Api {
 		}
 
 		$results = get_transient('language_packs');
-		if ( $results ) {
-			return $results;
+
+		if ( ! $results ) {
+			$response = wp_remote_get( 'http://api.wordpress.org/translations/core/1.0/?version=' . $wp_version );
+
+			if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
+				return false;
+			}
+
+			$results = json_decode( wp_remote_retrieve_body( $response ), true );
+
+			if ( ! is_array( $results ) ) {
+				return false;
+			}
+
+			set_transient( 'language_packs', $results, DAY_IN_SECONDS );
 		}
 
-		$response = wp_remote_get( 'http://api.wordpress.org/translations/core/1.0/?version=' . $wp_version );
-
-		if ( is_wp_error( $response ) || 200 != wp_remote_retrieve_response_code( $response ) ) {
-			return false;
-		}
-
-		$results = json_decode( wp_remote_retrieve_body( $response ), true );
-
-		if ( ! is_array( $results ) ) {
-			return false;
-		}
-
-		set_transient( 'language_packs', $results, DAY_IN_SECONDS );
-
-		return $results;
+		return $results['translations'];
 	}
 
 
