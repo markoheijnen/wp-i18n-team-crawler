@@ -110,12 +110,16 @@ class WP_I18n_Team_Api {
 	private static function update_locale_info( $post_id, $slug ) {
 		$data = WP_I18n_Team_Crawler::get_locale( $slug );
 
-		update_post_meta( $post_id, 'url', $data['url'] );
-		update_post_meta( $post_id, 'version', $data['version'] );
 
+		if ( $data ) {
+			update_post_meta( $post_id, 'url', $data['url'] );
+			update_post_meta( $post_id, 'version', $data['version'] );
 
-		update_post_meta( $post_id, '_validators', $data['validators'] );
-		update_post_meta( $post_id, '_translators', $data['translators'] );
+			update_post_meta( $post_id, '_validators', $data['validators'] );
+			update_post_meta( $post_id, '_translators', $data['translators'] );
+		}
+
+		return (bool) $data;
 	}
 
 
