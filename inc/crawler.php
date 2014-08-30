@@ -3,7 +3,7 @@
 class WP_I18n_Team_Crawler {
 
 	public static function get_locale( $slug ) {
-		$locale_data = array();
+		$locale_data = false;
 		$locale      = GP_Locales::by_slug( $slug );
 		$url         = 'http://api.wordpress.org/core/credits/1.1/?version=' . WP_I18n_Team_Api::current_wordpress_version() . '&locale=' . $locale->wp_locale;
 
@@ -11,7 +11,8 @@ class WP_I18n_Team_Crawler {
 		$body     = wp_remote_retrieve_body( $response );
 
 		if( $body ) {
-			$data = json_decode( $body );
+			$locale_data = array();
+			$data        = json_decode( $body );
 
 			if( isset( $data->groups->validators ) ) {
 				$locale_data['validators'] = $data->groups->validators->data;
