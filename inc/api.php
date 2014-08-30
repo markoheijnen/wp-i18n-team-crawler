@@ -75,6 +75,13 @@ class WP_I18n_Team_Api {
 	}
 
 
+	public static function get_language_pack( $wp_locale ) {
+		$result = wp_filter_object_list( self::get_language_packs(), array( 'language' => $wp_locale ) );
+
+		return reset( $result );
+	}
+
+
 	/**
 	 * Retrieve language packs
 	 *
