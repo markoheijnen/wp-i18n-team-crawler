@@ -46,8 +46,14 @@ class WP_I18n_Team_Api {
 			$locale_object = get_post( $post_id );
 		}
 		else {
-			$date    = mysql2date( 'U', $locale_object->post_modified ) + DAY_IN_SECONDS;
 			$current = current_time( 'timestamp' );
+
+			if ( ! $locale_object->synced ) {
+				$date = mysql2date( 'U', $locale_object->post_modified ) + HOUR_IN_SECONDS;
+			}
+			else {
+				$date = mysql2date( 'U', $locale_object->post_modified ) + DAY_IN_SECONDS;
+			}
 
 			// Only rune the first 15 calls.
 			if ( self::$counter <= 15 && $date < $current ) {
@@ -110,6 +116,7 @@ class WP_I18n_Team_Api {
 	private static function update_locale_info( $post_id, $slug ) {
 		$data = WP_I18n_Team_Crawler::get_locale( $slug );
 
+		update_post_meta( $post_id, 'synced', (bool) $data );
 
 		if ( $data ) {
 			update_post_meta( $post_id, 'url', $data['url'] );
