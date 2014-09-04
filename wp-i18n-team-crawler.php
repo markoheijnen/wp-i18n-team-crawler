@@ -104,7 +104,7 @@ class WP_I18n_Teams {
 			$table .= '<td>' . $site->slug . '</td>';
 			$table .= '<td>' . $site->wp_locale . '</td>';
 			$table .= '<td>' . $version . '</td>';
-			$table .= '<td><a href="' . home_url('locale') . '/' . $locale->post_name . '/">' . __( 'More', 'wp-i18n-team-crawler' ) . '</a></td>';
+			$table .= '<td><a href="' . home_url('internationalization') . '/' . $locale->post_name . '/">' . __( 'More', 'wp-i18n-team-crawler' ) . '</a></td>';
 			$table .= '</tr>';
 		}
 
