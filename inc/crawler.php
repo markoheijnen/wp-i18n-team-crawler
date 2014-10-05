@@ -5,7 +5,7 @@ class WP_I18n_Team_Crawler {
 	public static function get_locale( $slug ) {
 		$locale_data = false;
 		$locale      = GP_Locales::by_slug( $slug );
-		$url         = 'http://api.wordpress.org/core/credits/1.1/?version=' . WP_I18n_Team_Api::current_wordpress_version() . '&locale=' . $locale->wp_locale;
+		$url         = 'https://api.wordpress.org/core/credits/1.1/?version=' . WP_I18n_Team_Api::current_wordpress_version() . '&locale=' . $locale->wp_locale;
 
 		$response = wp_remote_get( $url );
 		$body     = wp_remote_retrieve_body( $response );
@@ -50,28 +50,28 @@ class WP_I18n_Team_Crawler {
 	public static function get_locale_url( $slug ) {
 		switch ( $slug ) {
 			case 'es-cl':
-				$url = 'http://cl.wordpress.org';
+				$url = 'https://cl.wordpress.org';
 			break;
 			case 'es-pe':
-				$url = 'http://pe.wordpress.org';
+				$url = 'https://pe.wordpress.org';
 			break;
 			case 'es-ve':
-				$url = 'http://ve.wordpress.org';
+				$url = 'https://ve.wordpress.org';
 			break;
 			case 'pt-br':
-				$url = 'http://br.wordpress.org';
+				$url = 'https://br.wordpress.org';
 			break;
 			case 'sa-in':
-				$url = 'http://sa.wordpress.org';
+				$url = 'https://sa.wordpress.org';
 			break;
 			case 'zh-cn':
-				$url = 'http://cn.wordpress.org';
+				$url = 'https://cn.wordpress.org';
 			break;
 			case 'zh-tw':
-				$url = 'http://tw.wordpress.org';
+				$url = 'https://tw.wordpress.org';
 			break;
 			default:
-				$url = 'http://' . $slug . '.wordpress.org';
+				$url = 'https://' . $slug . '.wordpress.org';
 		}
 
 		return $url;

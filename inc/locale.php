@@ -117,11 +117,11 @@ class WP_I18n_Team_Locale {
 
 				foreach( $validators as $validator ) {
 					$content .= '<li>';
-					$content .= '<a href="http://profiles.wordpress.org/' . esc_attr( $validator[2] ) . '">';
+					$content .= '<a href="https://profiles.wordpress.org/' . esc_attr( $validator[2] ) . '">';
 					$content .= '<img src="' . $gravatar . $validator[1] . '?size=60" class="gravatar" alt="' . esc_attr( $validator[0] ) . '" />';
 					$content .= '</a>';
 
-					$content .= '<a class="web" href="http://profiles.wordpress.org/' . esc_attr( $validator[2] ) . '">' . $validator[0] . "</a>";
+					$content .= '<a class="web" href="https://profiles.wordpress.org/' . esc_attr( $validator[2] ) . '">' . $validator[0] . "</a>";
 					$content .= '</li>';
 				}
 
@@ -137,7 +137,7 @@ class WP_I18n_Team_Locale {
 
 				foreach( $translators as $username => $name ) {
 					$content .= '<li>';
-					$content .= '<a href="http://profiles.wordpress.org/' . esc_attr( $username ) . '">' . $name . "</a>";
+					$content .= '<a href="https://profiles.wordpress.org/' . esc_attr( $username ) . '">' . $name . "</a>";
 					$content .= '</li>';
 				}
 
