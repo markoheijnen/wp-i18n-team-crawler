@@ -10,26 +10,27 @@ class WP_I18n_Team_Crawler {
 		$response = wp_remote_get( $url );
 		$body     = wp_remote_retrieve_body( $response );
 
-		if( $body ) {
+		if ( $body ) {
 			$locale_data = array();
 			$data        = json_decode( $body );
 
-			if( isset( $data->groups->validators ) ) {
+			if ( isset( $data->groups->validators ) ) {
 				$locale_data['validators'] = $data->groups->validators->data;
 			}
 			else {
 				$locale_data['validators'] = array();
 			}
 
-			if( isset( $data->groups->translators ) ) {
+			if ( isset( $data->groups->translators ) ) {
 				$locale_data['translators'] = $data->groups->translators->data;
 			}
 			else {
 				$locale_data['translators'] = array();
 			}
 
-			$locale_data['url']     = self::get_locale_url( $slug );
-			$locale_data['version'] = '';
+			$locale_data['url']             = self::get_locale_url( $slug );
+			$locale_data['version']         = '';
+			$locale_data['core_percentage'] = '';
 
 			$request = wp_remote_get( $locale_data['url'], array( 'redirection' => 0 ) );
 			$code    = wp_remote_retrieve_response_code( $request );
@@ -42,10 +43,50 @@ class WP_I18n_Team_Crawler {
 			else {
 				$locale_data['url'] = '';
 			}
+
+			$locale_data['core_percentage'] = self::get_locale_core_percentage( $slug );
 		}
 
 		return $locale_data;
 	}
+
+	public static function get_locale_core_percentage( $slug ) {
+		$url = 'https://translate.wordpress.org/api/languages/' . $slug;
+
+		$response = wp_remote_get( $url );
+		$body     = wp_remote_retrieve_body( $response );
+
+		if ( $body ) {
+			$data = json_decode( $body );
+			
+			if ( isset( $data->{"1"} ) ) {
+				$core_project = $data->{"1"}->{"2"};
+
+				$current_count = $all_count = 0;
+
+				foreach ( $core_project->sets as $set ) {
+					if ( ! in_array( $set->project_path, array('wp/dev', 'wp/dev/admin', 'wp/dev/admin/network' ) ) ) {
+						continue;
+					}
+
+					if ( $set->slug == 'formal' || $set->slug == 'informal' ) {
+						continue;
+					}
+
+					$current_count += $set->current_count;
+					$all_count     += $set->all_count;
+				}
+
+				if ( $all_count ) {
+					return floor( $current_count / $all_count * 100 ) / 100;
+				}
+			}
+		}
+
+		return false;
+	}
+
+
 
 	public static function get_locale_url( $slug ) {
 		switch ( $slug ) {

@@ -45,6 +45,7 @@ class WP_I18n_Teams {
 		$table .= '<th>' . __( 'Locale Code', 'wp-i18n-team-crawler' ) . '</th>';
 		$table .= '<th>' . __( 'WordPress Locale', 'wp-i18n-team-crawler' ) . '</th>';
 		$table .= '<th>' . __( 'Version', 'wp-i18n-team-crawler' ) . '</th>';
+		$table .= '<th>' . __( 'Core translations', 'wp-i18n-team-crawler' ) . '</th>';
 		$table .= '<th></th>';
 		$table .= '</tr>';
 		$table .= '</thead>';
@@ -104,6 +105,7 @@ class WP_I18n_Teams {
 			$table .= '<td>' . $site->slug . '</td>';
 			$table .= '<td>' . $site->wp_locale . '</td>';
 			$table .= '<td>' . $version . '</td>';
+			$table .= '<td>' . $locale->core_percentage * 100 . '%</td>';
 			$table .= '<td><a href="' . home_url('internationalization') . '/' . $locale->post_name . '/">' . __( 'More', 'wp-i18n-team-crawler' ) . '</a></td>';
 			$table .= '</tr>';
 		}
