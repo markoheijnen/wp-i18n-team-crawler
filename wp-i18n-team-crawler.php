@@ -15,6 +15,10 @@ include 'inc/api.php';
 include 'inc/crawler.php';
 include 'inc/locale.php';
 
+if ( defined('WP_CLI') && WP_CLI ) {
+	include __DIR__ . '/inc/wp-cli.php';
+}
+
 class WP_I18n_Teams {
 	static $version = '0.9';
 

@@ -2,6 +2,7 @@
 
 class WP_I18n_Team_Api {
 	private static $counter = 1;
+	public  static $max     = 15;
 
 	public static function get_sites() {
 		include_once dirname( __DIR__ ) . '/locales/locales.php';
@@ -13,7 +14,7 @@ class WP_I18n_Team_Api {
 		return $locales;
 	}
 
-	public static function get_locale( $slug ) {
+	public static function get_locale( $slug, $cached = true ) {
 		include_once dirname( __DIR__ ) . '/locales/locales.php';
 
 		$post = get_post();
@@ -56,7 +57,7 @@ class WP_I18n_Team_Api {
 			}
 
 			// Only rune the first 15 calls.
-			if ( self::$counter <= 15 && $date < $current ) {
+			if ( ! $cached || ( self::$counter <= self::$max && $date < $current ) ) {
 				self::update_locale_info( $locale_object->ID, $slug );
 
 				wp_update_post( 
@@ -123,8 +124,10 @@ class WP_I18n_Team_Api {
 		update_post_meta( $post_id, 'synced', (bool) $data );
 
 		if ( $data ) {
+
 			update_post_meta( $post_id, 'url', $data['url'] );
 			update_post_meta( $post_id, 'version', $data['version'] );
+			update_post_meta( $post_id, 'core_percentage', $data['core_percentage'] );
 
 			update_post_meta( $post_id, '_validators', $data['validators'] );
 			update_post_meta( $post_id, '_translators', $data['translators'] );
