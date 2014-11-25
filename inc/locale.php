@@ -131,8 +131,9 @@ class WP_I18n_Team_Locale {
 				$content .= '<p>' . __( 'No validators for the language.', 'wp-i18n-team-crawler' ) . '</p>';
 			}
 
+
+			$content .= "<h2>Translators</h2>";
 			if ( $translators ) {
-				$content .= "<h2>Translators</h2>";
 				$content .= '<ul>';
 
 				foreach( $translators as $username => $name ) {
@@ -141,8 +142,14 @@ class WP_I18n_Team_Locale {
 					$content .= '</li>';
 				}
 
-				$content .= '</ul>';
+				$content .= '</ul><br/>';
 			}
+
+			$content .= '<div class="alert alert-info" role="alert"><p>';
+			$content .= '<a href="https://translate.wordpress.org/languages/' . $post->post_name . '">';
+			$content .= sprintf( __( 'Become a translator yourself, check if %s needs some help!', 'wp-i18n-team-crawler' ), $post->post_title );
+			$content .= '</a>';
+			$content .= '</p></div>';
 		}
 
 		return $content;
