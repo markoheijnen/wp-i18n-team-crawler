@@ -33,6 +33,7 @@ class WP_I18n_Teams {
 
 
 	public function all_information( $args ) {
+		$latest_incomplete = array();
 		$no_sites = $no_downloads = $latest = $minor_behind = $major_behind_one = $major_behind_many = 0;
 
 		$sites = WP_I18n_Team_Api::get_sites();
@@ -63,6 +64,10 @@ class WP_I18n_Teams {
 
 				if ( $locale->version == $wp_version ) {
 					$class .= ' latest';
+
+					if ( $locale->core_percentage < 1 ) {
+						$latest_incomplete[] = $site->english_name;
+					}
 
 					$latest++;
 				}
@@ -124,6 +129,14 @@ class WP_I18n_Teams {
 			'<strong class="i18n-label">' . ( $no_sites + $no_downloads ) . '</strong>'
 		);
 		$html .= '</p>';
+
+		if ( $latest_incomplete ) {
+			$html .= '<p>';
+			$html .= sprintf(
+				__( 'Locales that are up-to-date with incomplete packages: %s' ),
+				implode( ', ', $latest_incomplete )
+			);
+		}
 
 		$html = '<div class="translators-info">' . $html . $table . '</div>';
 
