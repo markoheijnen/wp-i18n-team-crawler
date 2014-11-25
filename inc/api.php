@@ -167,6 +167,12 @@ class WP_I18n_Team_Api {
 	public static function current_wordpress_version() {
 		global $wp_version;
 
+		$cur = get_preferred_from_update_core();
+
+		if ( isset( $cur->response ) || $cur->response == 'upgrade' ) {
+			return $cur->current;
+		}
+
 		return $wp_version;
 	}
 
