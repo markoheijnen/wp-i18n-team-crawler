@@ -993,15 +993,13 @@ class GP_Locales {
 
 		$kin = new GP_Locale();
 		$kin->english_name = 'Kinyarwanda';
-		$kin->native_name = 'Kinyarwanda';
+		$kin->native_name = 'Ikinyarwanda';
 		$kin->lang_code_iso_639_1 = 'rw';
 		$kin->lang_code_iso_639_2 = 'kin';
 		$kin->lang_code_iso_639_3 = 'kin';
 		$kin->wp_locale = 'kin';
 		$kin->country_code = 'rw';
-		$kin->slug = 'rw';
-		$kin->nplurals = 2;
-		$kin->plural_expression = '(n > 1)';
+		$kin->slug = 'kin';
 
 		$kk = new GP_Locale();
 		$kk->english_name = 'Kazakh';
@@ -1103,6 +1101,16 @@ class GP_Locales {
 		$li->wp_locale = 'li';
 		$li->slug = 'li';
 		$li->google_code = 'li';
+
+		$lin = new GP_Locale();
+		$lin->english_name = 'Lingala';
+		$lin->native_name = 'Ngala';
+		$lin->lang_code_iso_639_1 = 'ln';
+		$lin->lang_code_iso_639_2 = 'lin';
+		$lin->wp_locale = 'lin';
+		$lin->slug = 'lin';
+		$lin->nplurals = 2;
+		$lin->plural_expression = 'n>1';
 
 		$lo = new GP_Locale();
 		$lo->english_name = 'Lao';
@@ -1324,6 +1332,16 @@ class GP_Locales {
 		$oc->lang_code_iso_639_1 = 'oc';
 		$oc->lang_code_iso_639_2 = 'oci';
 		$oc->slug = 'oc';
+
+		$ory = new GP_Locale();
+		$ory->english_name = 'Oriya';
+		$ory->native_name = 'ଓଡ଼ିଆ';
+		$ory->lang_code_iso_639_1 = 'or';
+		$ory->lang_code_iso_639_2 = 'ory';
+		$ory->country_code = 'in';
+		$ory->wp_locale = 'ory';
+		$ory->google_code = 'or';
+		$ory->slug = 'ory';
 
 		$os = new GP_Locale();
 		$os->english_name = 'Ossetic';
@@ -1831,7 +1849,7 @@ class GP_Locales {
 
 		$zh_cn = new GP_Locale();
 		$zh_cn->english_name = 'Chinese (China)';
-		$zh_cn->native_name = '中文';
+		$zh_cn->native_name = '简体中文';
 		$zh_cn->lang_code_iso_639_1 = 'zh';
 		$zh_cn->lang_code_iso_639_2 = 'zho';
 		$zh_cn->country_code = 'cn';
@@ -1866,7 +1884,7 @@ class GP_Locales {
 
 		$zh_tw = new GP_Locale();
 		$zh_tw->english_name = 'Chinese (Taiwan)';
-		$zh_tw->native_name = '中文';
+		$zh_tw->native_name = '繁體中文';
 		$zh_tw->lang_code_iso_639_1 = 'zh';
 		$zh_tw->lang_code_iso_639_2 = 'zho';
 		$zh_tw->country_code = 'tw';
